@@ -1,23 +1,23 @@
 #!/bin/sh
 
-SKINFNAME="Capri"
+SKINFNAME="Capri-CN"
 SKINDIRNAME="capri"
-SOURCEPATH="https://github.com/terrorhawk/Capri"
+SOURCEPATH="https://github.com/monster-CC/Capri-CN"
 #PLUGINPATH="/usr/local/directadmin/data/skin_data/$SKINDIRNAME"
 THISPATH=$PWD
 
 
-# install the skin
+# 安装主题
 doInstall()
 {
   echo ""
-  echo -e "\e[1;37mThis script will install and setup $SKINFNAME Skin for DirectAdmin Control panel."
+  echo -e "\e[1;37m这个脚本用于安装 $SKINFNAME 主题用于Dorectadmin面板，本主题版权由Terrorhawk所有，由CC大魔王汉化"
   
   
   echo -e "\e[40;37m\e[0m"
   echo ""
   if [ "$SKNAME" = "" ]; then
-    echo -n "Please choose a skin name or press enter to use default [$SKINFNAME]: "
+    echo -n "请选择一个想要使用的主题 [$SKINFNAME]: "
     read SKNAME
   fi
   
@@ -27,13 +27,13 @@ doInstall()
   
   SKINPATH="/usr/local/directadmin/data/skins/$SKINDIRNAME"
   
-  echo -e "Skin name will be:\e[1;37m $SKNAME \e[40;37m\e[0m"
+  echo -e "主题名将为:\e[1;37m $SKNAME \e[40;37m\e[0m"
   echo ""
 
   
   echo ""
-  echo "Capri skin also have a email-only version for users who have a email services."
-  echo -n "Would you like to install a second email-only skin (will be called $SKNAME-mail)? (y/n) [n]: "
+  echo "Capri 主题同样适用于只使用网页邮箱功能的DA面板"
+  echo -n "你想安装邮箱主题么？ (主题名将为 $SKNAME-mail)? (y/n) [n]: "
   read SKMAILONLY
   echo ""
   
@@ -41,11 +41,11 @@ doInstall()
   
   if [ "$OVERWRITE" = "" ]; then
     if [ -d "$SKINPATH" ]; then
-      echo -n "Directory $SKINPATH already exists. Do you want to delete it? (y/n) [y]: "
+      echo -n "目录 $SKINPATH 已存在！ 你想删除他么？ (y/n) [y]: "
       read ACT1
       echo
       if [ "$ACT1" = "n" ]; then
-        echo "Instalation aborted by user.";
+        echo "安装被用户中止！";
         exit 0;
       else
         rm -fr $SKINPATH/*
@@ -56,48 +56,48 @@ doInstall()
   
   if [ ! -d "$SKINPATH" ]; then
     mkdir $SKINPATH
-    echo "Create $SKINPATH"
+    echo "创建 $SKINPATH"
   fi
   chmod 777 $SKINPATH
   chown diradmin:diradmin $SKINPATH
   
   
   cd $SKINPATH
-  echo -n "Downloading skin files to $SKINPATH...            "
-  wget -q -O $SKINPATH/$SKINDIRNAME.zip https://github.com/Terrorhawk/Capri/archive/master.zip --no-check-certificate
+  echo -n "正在下载主题文件至 $SKINPATH...            "
+  wget -q -O $SKINPATH/$SKINDIRNAME.zip https://github.com/monster-CC/Capri-CN/archive/master.zip --no-check-certificate
   
-  # aca chequeo si el archivo se descargo
+  # 乱码或下载出错
   if [ ! -f "$SKINPATH/$SKINDIRNAME.zip" ]; then
-    echo -e "\e[1;31m Failed \e[40;37m\e[0m"; echo""
-    echo -e "*** An error occur while downloading files. Please try again or contact support."
+    echo -e "\e[1;31m 很抱歉，安装时出现了问题…… \e[40;37m\e[0m"; echo""
+    echo -e "*** 下载时出现了问题，请重试或联系汉化作者或者提交issue."
     echo ""
     cd $THISPATH
     exit 0;
   fi
   
-  # Check the size 150k
+  # 检查大小是否为150k
   if [ `du -k $SKINPATH/$SKINDIRNAME.zip |awk '{print $1}'` -lt 200 ]; then
     
-    # Si se descargo otra cosa, borro y termino
+    # 提示错误
     rm -f $SKINPATH/$SKINDIRNAME.zip
-    echo -e "\e[1;31m Failed \e[40;37m\e[0m"; echo""
-    echo -e "*** An error occur while downloading files. Cannot reach source download URL. Please try again or contact support."
+    echo -e "\e[1;31m 噢不！下载时出现了错误 \e[40;37m\e[0m"; echo""
+    echo -e "*** 在下载时出现了一个问题！我们无法连接到下载地址.请重试或者提交issue"
     echo ""
     cd $THISPATH
     exit 0;
   fi
   
-  echo -e "\e[1;32m Done \e[40;37m\e[0m "
+  echo -e "\e[1;32m 完成！ \e[40;37m\e[0m "
   
-  echo -n "Decompressing skin files...          "
+  echo -n "正在解压缩主题文件！请稍后……       "
   
   unzip $SKINPATH/$SKINDIRNAME.zip -d $SKINPATH
-  mv $SKINPATH/Capri-master/* $SKINPATH
-  rm -rf $SKINPATH/Capri-master/
+  mv $SKINPATH/Capri-CN-master/* $SKINPATH
+  rm -rf $SKINPATH/Capri-CN-master/
   
   if [ ! -f "$SKINPATH/files_admin.conf" ]; then
-    echo -e "\e[1;31m Failed \e[40;37m\e[0m"; echo""
-    echo -e "*** An error occur while decompressing files. Please try again or contact support."
+    echo -e "\e[1;31m 失败！ \e[40;37m\e[0m"; echo""
+    echo -e "*** 解压文件时出现了一个错误"
     echo ""
     rm -fr $SKINPATH/*
     rmdir $SKINPATH
@@ -105,10 +105,10 @@ doInstall()
     exit 0;
   fi
   
-  echo -e "\e[1;32m Done \e[40;37m\e[0m "
+  echo -e "\e[1;32m 完成！ \e[40;37m\e[0m "
   
   
-  # instalo mail only skin
+  # 安装邮件皮肤
   if [ "$SKMAILONLY" = "y" ]; then
   
     if [ ! -d "$SKINPATH-mail" ]; then
@@ -118,12 +118,12 @@ doInstall()
     chown diradmin:diradmin $SKINPATH-mail
     cd $SKINPATH-mail
     
-    echo -n "Installing email-only skin...        "
+    echo -n "正在安装邮件主题中...        "
     wget -q -O $SKINPATH-mail/$SKINDIRNAME-mail.zip https://github.com/Terrorhawk/Capri-mailonly/archive/master.zip --no-check-certificate
     
     if [ ! -f "$SKINPATH-mail/$SKINDIRNAME-mail.zip" ]; then
-      echo -e "\e[1;31m Failed \e[40;37m\e[0m"; echo""
-      echo -e "*** An error occur while downloading files. Please try again or contact support."
+      echo -e "\e[1;31m 失败 \e[40;37m\e[0m"; echo""
+      echo -e "*** 下载时出现了问题，请重试"
       echo ""
       cd $THISPATH
     else
@@ -131,8 +131,8 @@ doInstall()
         rm -f $SKINPATH-mail/$SKINDIRNAME-mail.zip
         rm -f $SKINPATH-mail/*
         rmdir $SKINPATH-mail
-        echo -e "\e[1;31m Failed \e[40;37m\e[0m";
-        echo -e "*** An error occur while downloading email-only skin files. Mail-only skin not installed."
+        echo -e "\e[1;31m 失败 \e[40;37m\e[0m";
+        echo -e "*** 安装时出现了一个错误，邮件皮肤主题没有被成功安装，请重试"
         cd $THISPATH
       else
           unzip $SKINPATH-mail/$SKINDIRNAME-mail.zip -d $SKINPATH-mail
@@ -147,7 +147,7 @@ doInstall()
   
 
 
-  echo -n "Setting permissions...               "
+  echo -n "设置文件权限中...               "
   chown -R diradmin:diradmin $SKINPATH/*
   find $SKINPATH/ -type f -exec chmod 755 {} \;
   chown diradmin:diradmin $SKINPATH
@@ -161,28 +161,28 @@ doInstall()
   fi
   
   
-  echo -e "\e[1;32m Done \e[40;37m\e[0m "
+  echo -e "\e[1;32m 完成 \e[40;37m\e[0m "
   
-  # finalizo la instalacion
+  # 主题安装完成
   echo "";echo ""
-  echo -e "\e[1;37mCongratulations! $SKINFNAME has been installed. Log in you control panel and switch to $SKNAME skin.\e[40;37m\e[0m"
-  echo "Now login you control panel as admin go to skin manager page, switch to $SKNAME skin in the skin manager box."
+  echo -e "\e[1;37m喜大普奔! $SKINFNAME 主题已经被成功安装. 你现在可以登陆后台更换 $SKNAME 主题了！.\e[40;37m\e[0m"
+  echo "现在以超级管理员（admin） 身份登陆后台，并进入主题管理页，选择 $SKNAME 主题并应用！"
   echo ""
   
   exit 0;
 }
 
 ####################################################################################################################################################
-type unzip >/dev/null 2>&1 || { echo >&2 "I require unzip but it's not installed.  Aborting."; exit 1; }
+type unzip >/dev/null 2>&1 || { echo >&2 "对不起，我需要unzip软件包，但我发现没有，请安装后重试，退出中"; exit 1; }
 
-echo -n "Do you want to make a fresh install? (y/n) [y]: "
+echo -n "想要重新安装一个全新的主题么？ (y/n) [y]: "
         read FRESHINSTALL
         echo
         
         if [ "$FRESHINSTALL" != "n" ]; then
           doInstall
         else
-          echo "Nothing to do. Good bye!"
+          echo "没啥可以做的，再见！"
         fi
 
 exit 0;
