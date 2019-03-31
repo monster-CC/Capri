@@ -1,8 +1,8 @@
-1=8
-2=-- anything --
-3=Brute-Force Attack detected in service log
-4=is currently down
-5=Your backups are now ready
-6=An error occurred during the backup
-7=emails have just been sent by
-8=Warning: The system load average is
+1= 8
+2 =  - 任何事情 - 
+3 =在服务日志中检测到暴力攻击
+4 =目前正在下降
+5 =您的备份现已准备就绪
+6 =备份期间发生错误
+7 =刚发送的电子邮件
+8 =警告：系统负载平均值为
