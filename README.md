@@ -56,7 +56,7 @@ Instruction for install (from git):
 =====
 
 ```bash
-wget -O capri.sh https://raw.githubusercontent.com/Terrorhawk/Capri/master/install-script --no-check-certificate
+wget -O capri.sh https://raw.githubusercontent.com/monster-CC/Capri-CN/master/install-script --no-check-certificate
 chmod +x capri.sh
 ./capri.sh
 ```
